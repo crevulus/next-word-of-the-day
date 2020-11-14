@@ -56,7 +56,8 @@ export async function getStaticProps(context) {
     {
       method: "GET",
       headers: {
-        authorization: "Bearer " + process.env.NEXT_PUBLIC_SPOTIFY_ACCESS_TOKEN,
+        authorization:
+          "Bearer " + process.env.NEXT_PUBLIC_ENV_SPOTIFY_ACCESS_TOKEN,
       },
     }
   )
@@ -66,6 +67,7 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
+  console.log(process.env.NEXT_PUBLIC_ENV_SPOTIFY_ACCESS_TOKEN);
   const wordsData = await wordsRes.json();
   const songsData = await songsRes.json();
   return {
