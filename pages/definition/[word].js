@@ -5,7 +5,27 @@ import { withRouter } from "next/router";
 class Definition extends Component {
   constructor({ router }, ...props) {
     super(props);
+    this.state = {
+      songsArray: [],
+      test: "",
+    };
   }
+
+  filterSpotifyResults = () => {
+    var filteredArray;
+    this.props.songsData.tracks.items.forEach((obj) => {
+      if (obj.explicit === true) {
+        return;
+      } else {
+        filteredArray.push(obj);
+      }
+    });
+    this.setState({ songsArray: filteredArray });
+  };
+
+  componentDidMount = () => {
+    this.filterSpotifyResults();
+  };
 
   render() {
     if (this.props.router.isFallback) {
@@ -51,7 +71,7 @@ export async function getStaticProps(context) {
       console.error(err);
     });
   const songsRes = await fetch(
-    `https://api.spotify.com/v1/search?q=${context.params.word}&type=track&explicit=false&is_playable=true`,
+    `https://api.spotify.com/v1/search?q=${context.params.word}&type=track`,
     {
       method: "GET",
       headers: {
@@ -72,6 +92,7 @@ export async function getStaticProps(context) {
     props: {
       wordsData,
       songsData,
+      searchTerm: context.params.word,
     },
   };
 }
