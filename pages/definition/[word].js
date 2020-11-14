@@ -20,10 +20,9 @@ class Definition extends Component {
           ))}
         </ul>
         <iframe
-          src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
+          src={`https://open.spotify.com/embed/track/${this.props.songsData.tracks.items[0].id}`}
           width="300"
           height="380"
-          frameborder="0"
           allowtransparency="true"
           allow="encrypted-media"
         ></iframe>
@@ -52,7 +51,7 @@ export async function getStaticProps(context) {
       console.error(err);
     });
   const songsRes = await fetch(
-    `https://api.spotify.com/v1/search?q=${context.params.word}&type=track`,
+    `https://api.spotify.com/v1/search?q=${context.params.word}&type=track&explicit=false&is_playable=true`,
     {
       method: "GET",
       headers: {
@@ -67,7 +66,6 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
-  console.log(process.env.NEXT_PUBLIC_ENV_SPOTIFY_ACCESS_TOKEN);
   const wordsData = await wordsRes.json();
   const songsData = await songsRes.json();
   return {
