@@ -15,10 +15,18 @@ class Definition extends Component {
       <div>
         <h3>this is where the definition will go</h3>
         <ul>
-          {this.props.data.definitions.map((obj) => (
-            <li>{obj.definition}</li>
+          {this.props.wordsData.definitions.map((obj, i) => (
+            <li key={i}>{obj.definition}</li>
           ))}
         </ul>
+        <iframe
+          src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
+          width="300"
+          height="380"
+          frameborder="0"
+          allowtransparency="true"
+          allow="encrypted-media"
+        ></iframe>
       </div>
     );
   }
@@ -27,7 +35,7 @@ class Definition extends Component {
 export default withRouter(Definition);
 
 export async function getStaticProps(context) {
-  const res = await fetch(
+  const wordsRes = await fetch(
     `https://wordsapiv1.p.rapidapi.com/words/${context.params.word}/definitions`,
     {
       method: "GET",
@@ -43,11 +51,27 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
-  console.log(res);
-  const data = await res.json();
+  const songsRes = await fetch(
+    `https://api.spotify.com/v1/search?q=${context.params.word}&type=track`,
+    {
+      method: "GET",
+      headers: {
+        authorization: "Bearer " + process.env.NEXT_PUBLIC_SPOTIFY_ACCESS_TOKEN,
+      },
+    }
+  )
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  const wordsData = await wordsRes.json();
+  const songsData = await songsRes.json();
   return {
     props: {
-      data,
+      wordsData,
+      songsData,
     },
   };
 }
