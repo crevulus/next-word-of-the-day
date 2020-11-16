@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+
 import { withRouter } from "next/router";
+import Head from "next/head";
 
 class Definition extends Component {
   constructor({ router }, ...props) {
@@ -14,6 +17,9 @@ class Definition extends Component {
 
     return (
       <div>
+        <Head>
+          <title>Musical Dictionary | {this.props.searchTerm}</title>
+        </Head>
         <h3>this is where the definition will go</h3>
         <ul>
           {this.props.wordsData.definitions.map((obj, i) => (
@@ -32,7 +38,11 @@ class Definition extends Component {
   }
 }
 
-export default withRouter(Definition);
+const mapStateToProps = (state) => ({
+  accessToken: state.accessToken,
+});
+
+export default connect(mapStateToProps, null)(withRouter(Definition));
 
 export async function getStaticProps(context) {
   const wordsRes = await fetch(
@@ -69,19 +79,19 @@ export async function getStaticProps(context) {
     });
   const wordsData = await wordsRes.json();
   const songsJSON = await songsRes.json();
-  const filteredArray = [];
+  const filteredSongsArray = [];
   songsJSON.tracks.items.map((obj) => {
     if (obj.explicit === true) {
       return;
     } else {
-      filteredArray.push(obj);
+      filteredSongsArray.push(obj);
       return;
     }
   });
   return {
     props: {
       wordsData,
-      songsData: filteredArray,
+      songsData: filteredSongsArray,
       searchTerm: context.params.word,
     },
     revalidate: 604800,
