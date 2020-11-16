@@ -7,30 +7,30 @@ class Definition extends Component {
     super(props);
     this.state = {
       songsArray: [],
-      test: "",
     };
   }
 
-  filterSpotifyResults = () => {
-    var filteredArray;
-    this.props.songsData.tracks.items.forEach((obj) => {
-      if (obj.explicit === true) {
-        return;
-      } else {
-        filteredArray.push(obj);
-      }
-    });
-    this.setState({ songsArray: filteredArray });
-  };
+  // filterSpotifyResults = () => {
+  //   var filteredArray = [];
+  //   this.props.songsData.tracks.items.forEach((obj) => {
+  //     if (obj.explicit === true) {
+  //       return;
+  //     } else {
+  //       filteredArray.push(obj);
+  //     }
+  //   });
+  //   this.setState({ songsArray: filteredArray });
+  // };
 
-  componentDidMount = () => {
-    this.filterSpotifyResults();
-  };
+  // componentDidMount = () => {
+  //   this.filterSpotifyResults();
+  // };
 
   render() {
     if (this.props.router.isFallback) {
       return <h4>Loading...</h4>;
     }
+
     return (
       <div>
         <h3>this is where the definition will go</h3>
