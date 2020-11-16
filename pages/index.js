@@ -32,7 +32,7 @@ export class Home extends Component {
             onChange={this.enterSearch}
           />
           <Link href={`/definition/${this.state.searchTerm}`}>
-            <Button variant="contained" color="secondary">
+            <Button type="submit" variant="contained" color="secondary">
               Search
             </Button>
           </Link>

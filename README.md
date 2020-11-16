@@ -1,3 +1,4 @@
 - [] Limit to songs locally available to user
 - [] Limit to exact matches
 - [] Enable user to create playlist
+- [] Switch mode for explicit/niche

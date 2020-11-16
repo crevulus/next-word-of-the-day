@@ -5,26 +5,7 @@ import { withRouter } from "next/router";
 class Definition extends Component {
   constructor({ router }, ...props) {
     super(props);
-    this.state = {
-      songsArray: [],
-    };
   }
-
-  // filterSpotifyResults = () => {
-  //   var filteredArray = [];
-  //   this.props.songsData.tracks.items.forEach((obj) => {
-  //     if (obj.explicit === true) {
-  //       return;
-  //     } else {
-  //       filteredArray.push(obj);
-  //     }
-  //   });
-  //   this.setState({ songsArray: filteredArray });
-  // };
-
-  // componentDidMount = () => {
-  //   this.filterSpotifyResults();
-  // };
 
   render() {
     if (this.props.router.isFallback) {
@@ -40,7 +21,7 @@ class Definition extends Component {
           ))}
         </ul>
         <iframe
-          src={`https://open.spotify.com/embed/track/${this.props.songsData.tracks.items[0].id}`}
+          src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
           width="300"
           height="380"
           allowtransparency="true"
@@ -87,13 +68,23 @@ export async function getStaticProps(context) {
       console.error(err);
     });
   const wordsData = await wordsRes.json();
-  const songsData = await songsRes.json();
+  const songsJSON = await songsRes.json();
+  const filteredArray = [];
+  songsJSON.tracks.items.map((obj) => {
+    if (obj.explicit === true) {
+      return;
+    } else {
+      filteredArray.push(obj);
+      return;
+    }
+  });
   return {
     props: {
       wordsData,
-      songsData,
+      songsData: filteredArray,
       searchTerm: context.params.word,
     },
+    revalidate: 604800,
   };
 }
 
