@@ -5,6 +5,12 @@ import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import Head from "next/head";
 
+import Layout from "../../components/Layout";
+import SimpleCard from "../../components/SimpleCard";
+
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+
 class Definition extends Component {
   constructor({ router }, ...props) {
     super(props);
@@ -15,17 +21,26 @@ class Definition extends Component {
       return <h4>Loading...</h4>;
     }
 
+    const wordCards = this.props.wordsData.results.map((obj, i) => (
+      <SimpleCard
+        definition={obj.definition}
+        category={obj.partOfSpeech}
+        synonyms={obj.synonyms}
+        key={i}
+      />
+    ));
+
     return (
-      <div>
+      <Layout>
         <Head>
           <title>Musical Dictionary | {this.props.searchTerm}</title>
         </Head>
-        <h3>this is where the definition will go</h3>
-        <ul>
-          {this.props.wordsData.definitions.map((obj, i) => (
-            <li key={i}>{obj.definition}</li>
-          ))}
-        </ul>
+        <Typography variant="h3" gutterBottom>
+          {this.props.searchTerm}
+        </Typography>
+        <Grid container spacing={2}>
+          {wordCards}
+        </Grid>
         <iframe
           src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
           width="300"
@@ -33,7 +48,7 @@ class Definition extends Component {
           allowtransparency="true"
           allow="encrypted-media"
         ></iframe>
-      </div>
+      </Layout>
     );
   }
 }
@@ -46,7 +61,7 @@ export default connect(mapStateToProps, null)(withRouter(Definition));
 
 export async function getStaticProps(context) {
   const wordsRes = await fetch(
-    `https://wordsapiv1.p.rapidapi.com/words/${context.params.word}/definitions`,
+    `https://wordsapiv1.p.rapidapi.com/words/${context.params.word}/`,
     {
       method: "GET",
       headers: {
@@ -61,6 +76,7 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
+
   const songsRes = await fetch(
     `https://api.spotify.com/v1/search?q=${context.params.word}&type=track`,
     {
@@ -77,6 +93,7 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
+
   const wordsData = await wordsRes.json();
   const songsJSON = await songsRes.json();
   const filteredSongsArray = [];
