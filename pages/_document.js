@@ -30,6 +30,11 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta property="custom" content="test" />
+          <script
+            data-ad-client="ca-pub-1448673172216186"
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          ></script>
         </Head>
         <body>
           <Main />
