@@ -27,7 +27,7 @@ export class Home extends Component {
   render() {
     return (
       <Layout>
-        <h1>Welcome to Next</h1>
+        <h1>Welcome to the Musical Dictionary</h1>
         <form>
           <TextField
             id="standard-basic"
