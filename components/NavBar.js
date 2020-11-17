@@ -1,4 +1,8 @@
 import React from "react";
+
+import theme from "../styles/theme";
+import { ThemeProvider } from "@material-ui/core/styles";
+
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -17,14 +21,16 @@ export default function NavBar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <Typography variant="h6" color="inherit">
-            Musical Dictionary
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit">
+              Musical Dictionary
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
+    </ThemeProvider>
   );
 }

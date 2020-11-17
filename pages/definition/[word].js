@@ -10,6 +10,7 @@ import SimpleCard from "../../components/SimpleCard";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 
 class Definition extends Component {
   constructor({ router }, ...props) {
@@ -35,19 +36,30 @@ class Definition extends Component {
         <Head>
           <title>Musical Dictionary | {this.props.searchTerm}</title>
         </Head>
-        <Typography variant="h3" gutterBottom>
-          {this.props.searchTerm}
-        </Typography>
-        <Grid container spacing={2}>
-          {wordCards}
-        </Grid>
-        <iframe
-          src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
-          width="300"
-          height="380"
-          allowtransparency="true"
-          allow="encrypted-media"
-        ></iframe>
+
+        <Container>
+          <div className="header-container">
+            <Typography variant="h1" gutterBottom>
+              {this.props.searchTerm}
+            </Typography>
+            <iframe
+              src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
+              width="300"
+              height="84"
+              allowtransparency="true"
+              allow="encrypted-media"
+            ></iframe>
+          </div>
+          <Grid
+            container
+            spacing={2}
+            className="cards-container"
+            direction="column"
+            alignItems="center"
+          >
+            {wordCards}
+          </Grid>
+        </Container>
       </Layout>
     );
   }

@@ -2,6 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
+import Paper from "@material-ui/core/Paper";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -28,34 +29,26 @@ export default function SimpleCard(props) {
 
   return (
     <Grid item xs={12}>
-      <Card className={classes.root}>
+      <Paper elevation={3}>
         <CardContent>
-          <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
+          <Typography color="textSecondary" variant="h6">
+            <em>{props.category}</em>
+          </Typography>
+          <Typography color="textSecondary" variant="h5" gutterBottom>
             {props.definition}
           </Typography>
-          <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
-            {props.category}
-          </Typography>
 
-          {/* {props.synonyms.map((synonym) => (
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {synonym}
-            </Typography>
-          ))} */}
+          <Typography>
+            Similar to:{" "}
+            {props.synonyms &&
+              props.synonyms.map((synonym, i) => {
+                if (i === props.synonyms.length - 1) {
+                  return synonym;
+                } else return `${synonym}, `;
+              })}
+          </Typography>
         </CardContent>
-      </Card>
+      </Paper>
     </Grid>
   );
 }

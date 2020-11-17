@@ -8,8 +8,21 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 
 import { ServerStyleSheets } from "@material-ui/core/styles";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
+import purple from "@material-ui/core/colors/purple";
+import green from "@material-ui/core/colors/green";
 
-const theme = responsiveFontSizes(createMuiTheme());
+const theme = responsiveFontSizes(
+  createMuiTheme({
+    palette: {
+      primary: {
+        main: purple[500],
+      },
+      secondary: {
+        main: green[500],
+      },
+    },
+  })
+);
 
 class MyDocument extends Document {
   render() {
