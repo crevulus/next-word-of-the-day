@@ -24,26 +24,6 @@ export class Home extends Component {
     this.setState({ searchTerm: e.target.value });
   };
 
-  runSearch = async () => {
-    const fetchedToken = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      headers: {
-        authorization: "Basic " + process.env.NEXT_PUBLIC_ACCESS_TOKEN_AUTH,
-        Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "grant_type=client_credentials",
-    })
-      .then((response) => {
-        return response;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    const accessToken = await fetchedToken.json();
-    this.props.addAccessToken(accessToken);
-  };
-
   render() {
     return (
       <Layout>
@@ -57,12 +37,7 @@ export class Home extends Component {
             onChange={this.enterSearch}
           />
           <Link href={`/definition/${this.state.searchTerm}`}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="secondary"
-              onClick={this.runSearch}
-            >
+            <Button type="submit" variant="contained" color="secondary">
               Search
             </Button>
           </Link>

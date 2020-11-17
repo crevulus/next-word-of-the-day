@@ -1,7 +1,8 @@
 import React from "react";
 
+import theme from "../styles/theme";
+
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
 import Paper from "@material-ui/core/Paper";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -31,15 +32,15 @@ export default function SimpleCard(props) {
     <Grid item xs={12}>
       <Paper elevation={3}>
         <CardContent>
-          <Typography color="textSecondary" variant="h6">
+          <Typography color="secondary" variant="h6">
             <em>{props.category}</em>
           </Typography>
-          <Typography color="textSecondary" variant="h5" gutterBottom>
+          <Typography color="primary" variant="h5" gutterBottom>
             {props.definition}
           </Typography>
 
-          <Typography>
-            Similar to:{" "}
+          <Typography color="secondary">
+            <span style={{ color: "black" }}>Similar to:</span>{" "}
             {props.synonyms &&
               props.synonyms.map((synonym, i) => {
                 if (i === props.synonyms.length - 1) {

@@ -4,6 +4,9 @@ import Head from "next/head";
 
 import NavBar from "./NavBar";
 
+import theme from "../styles/theme";
+import { ThemeProvider } from "@material-ui/core/styles";
+
 export class Layout extends Component {
   constructor(props) {
     super(props);
@@ -11,13 +14,15 @@ export class Layout extends Component {
 
   render() {
     return (
-      <div>
-        <Head>
-          <title>Musical Dictionary</title>
-        </Head>
-        <NavBar />
-        {this.props.children}
-      </div>
+      <ThemeProvider theme={theme}>
+        <div>
+          <Head>
+            <title>Musical Dictionary</title>
+          </Head>
+          <NavBar />
+          {this.props.children}
+        </div>
+      </ThemeProvider>
     );
   }
 }

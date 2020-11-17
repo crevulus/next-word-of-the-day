@@ -89,13 +89,30 @@ export async function getStaticProps(context) {
       console.error(err);
     });
 
+  let fetchedToken = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      authorization: "Basic " + process.env.NEXT_PUBLIC_ACCESS_TOKEN_AUTH,
+      Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "grant_type=client_credentials",
+  })
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  fetchedToken = await fetchedToken.json();
+  const accessToken = fetchedToken.access_token;
+
   const songsRes = await fetch(
     `https://api.spotify.com/v1/search?q=${context.params.word}&type=track`,
     {
       method: "GET",
       headers: {
-        authorization:
-          "Bearer " + process.env.NEXT_PUBLIC_ENV_SPOTIFY_ACCESS_TOKEN,
+        authorization: "Bearer " + accessToken,
       },
     }
   )
