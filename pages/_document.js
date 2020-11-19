@@ -35,12 +35,15 @@ class MyDocument extends Document {
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           ></script>
-          <meta name="twitter:widgets:theme" content="light" />
-          <meta name="twitter:widgets:border-color" content="#55acee" />
         </Head>
         <body>
           <Main />
           <NextScript />
+          <script
+            async
+            src="https://platform.twitter.com/widgets.js"
+            charset="utf-8"
+          ></script>
         </body>
       </Html>
     );

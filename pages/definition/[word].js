@@ -35,8 +35,8 @@ class Definition extends Component {
       <Layout>
         <Head>
           <title>Musical Dictionary | {this.props.searchTerm}</title>
+          <meta name="twitter:card" content="summary"></meta>
         </Head>
-
         <Container>
           <div className="header-container">
             <Typography variant="h1" gutterBottom>
@@ -60,32 +60,6 @@ class Definition extends Component {
           >
             {wordCards}
           </Grid>
-          {this.props.tweetsData && this.props.tweetsData.html}
-          <blockquote class="twitter-tweet">
-            <p lang="en" dir="ltr">
-              Sunsets don&#39;t get much better than this one over{" "}
-              <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">
-                @GrandTetonNPS
-              </a>
-              .{" "}
-              <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">
-                #nature
-              </a>{" "}
-              <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">
-                #sunset
-              </a>{" "}
-              <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a>
-            </p>
-            &mdash; US Department of the Interior (@Interior){" "}
-            <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">
-              May 5, 2014
-            </a>
-          </blockquote>{" "}
-          <script
-            async
-            src="https://platform.twitter.com/widgets.js"
-            charset="utf-8"
-          ></script>
         </Container>
       </Layout>
     );
@@ -169,7 +143,25 @@ export async function getStaticProps(context) {
 
   // Twitter API
   const tweetsRes = await fetch(
-    "https://publish.twitter.com/oembed?url=https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F507185938620219395",
+    `https://api.twitter.com/1.1/search/tweets.json?q=${context.params.word}&lang=en&result_type=popular&count=3`,
+    {
+      method: "GET",
+      headers: {
+        authorization:
+          "Bearer " + process.env.NEXT_PUBLIC_TWITTER_API_BEARER_TOKEN,
+      },
+    }
+  )
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  const tweetsData = await tweetsRes.json();
+
+  const tweetsRes = await fetch(
+    `https://publish.twitter.com/oembed?url=${tweetsData.statuses[0].entities.urls[0].expanded_url}`,
     {
       method: "GET",
       headers: {
