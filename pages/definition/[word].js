@@ -14,7 +14,7 @@ import Container from "@material-ui/core/Container";
 
 class Definition extends Component {
   constructor({ router }, ...props) {
-    super(props);
+    super({ router }, ...props);
   }
 
   render() {
@@ -46,7 +46,7 @@ class Definition extends Component {
               src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
               width="300"
               height="80"
-              frameborder="0"
+              frameBorder="0"
               allowtransparency="true"
               allow="encrypted-media"
             ></iframe>
@@ -60,6 +60,32 @@ class Definition extends Component {
           >
             {wordCards}
           </Grid>
+          {this.props.tweetsData && this.props.tweetsData.html}
+          <blockquote class="twitter-tweet">
+            <p lang="en" dir="ltr">
+              Sunsets don&#39;t get much better than this one over{" "}
+              <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">
+                @GrandTetonNPS
+              </a>
+              .{" "}
+              <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">
+                #nature
+              </a>{" "}
+              <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">
+                #sunset
+              </a>{" "}
+              <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a>
+            </p>
+            &mdash; US Department of the Interior (@Interior){" "}
+            <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">
+              May 5, 2014
+            </a>
+          </blockquote>{" "}
+          <script
+            async
+            src="https://platform.twitter.com/widgets.js"
+            charset="utf-8"
+          ></script>
         </Container>
       </Layout>
     );
@@ -73,6 +99,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, null)(withRouter(Definition));
 
 export async function getStaticProps(context) {
+  // wordsAPI
   const wordsRes = await fetch(
     `https://wordsapiv1.p.rapidapi.com/words/${context.params.word}/`,
     {
@@ -89,7 +116,9 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
+  const wordsData = await wordsRes.json();
 
+  // Spotify API
   let fetchedToken = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
     headers: {
@@ -123,8 +152,6 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
-
-  const wordsData = await wordsRes.json();
   const songsJSON = await songsRes.json();
   const filteredSongsArray = [];
   songsJSON.tracks.items.map((obj) => {
@@ -139,10 +166,31 @@ export async function getStaticProps(context) {
       return;
     }
   });
+
+  // Twitter API
+  const tweetsRes = await fetch(
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Ftwitter.com%2FInterior%2Fstatus%2F507185938620219395",
+    {
+      method: "GET",
+      headers: {
+        authorization:
+          "Bearer " + process.env.NEXT_PUBLIC_TWITTER_API_BEARER_TOKEN,
+      },
+    }
+  )
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  const tweetsData = await tweetsRes.json();
+
   return {
     props: {
       wordsData,
       songsData: filteredSongsArray,
+      tweetsData,
       searchTerm: context.params.word,
     },
     revalidate: 604800,

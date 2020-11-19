@@ -48,12 +48,16 @@ export default function SimpleCard(props) {
                 {props.synonyms.map((synonym, i) => {
                   if (i === props.synonyms.length - 1) {
                     return (
-                      <Link href={`/definition/${synonym}`}>{synonym}</Link>
+                      <Link key={i} href={`/definition/${synonym}`}>
+                        {synonym}
+                      </Link>
                     );
                   } else
                     return (
                       <span>
-                        <Link href={`/definition/${synonym}`}>{synonym}</Link>
+                        <Link key={i} href={`/definition/${synonym}`}>
+                          {synonym}
+                        </Link>
                         {", "}
                       </span>
                     );
