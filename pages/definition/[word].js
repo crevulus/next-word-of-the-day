@@ -45,7 +45,8 @@ class Definition extends Component {
             <iframe
               src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
               width="300"
-              height="84"
+              height="80"
+              frameborder="0"
               allowtransparency="true"
               allow="encrypted-media"
             ></iframe>
@@ -127,7 +128,11 @@ export async function getStaticProps(context) {
   const songsJSON = await songsRes.json();
   const filteredSongsArray = [];
   songsJSON.tracks.items.map((obj) => {
-    if (obj.explicit === true) {
+    const songTitle = obj.name.toLowerCase();
+    const searchTerm = context.params.word.toLowerCase();
+    const songRegex = new RegExp("\\b" + searchTerm + "\\b", "g");
+    const regexTest = songRegex.test(songTitle);
+    if (obj.explicit === true || regexTest === false) {
       return;
     } else {
       filteredSongsArray.push(obj);

@@ -2,6 +2,8 @@ import React from "react";
 
 import theme from "../styles/theme";
 
+import Link from "next/link";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import CardContent from "@material-ui/core/CardContent";
@@ -40,13 +42,24 @@ export default function SimpleCard(props) {
           </Typography>
 
           <Typography color="secondary">
-            <span style={{ color: "black" }}>Similar to:</span>{" "}
-            {props.synonyms &&
-              props.synonyms.map((synonym, i) => {
-                if (i === props.synonyms.length - 1) {
-                  return synonym;
-                } else return `${synonym}, `;
-              })}
+            {props.synonyms && (
+              <div>
+                <span style={{ color: "black" }}>Similar to: </span>
+                {props.synonyms.map((synonym, i) => {
+                  if (i === props.synonyms.length - 1) {
+                    return (
+                      <Link href={`/definition/${synonym}`}>{synonym}</Link>
+                    );
+                  } else
+                    return (
+                      <span>
+                        <Link href={`/definition/${synonym}`}>{synonym}</Link>
+                        {", "}
+                      </span>
+                    );
+                })}
+              </div>
+            )}
           </Typography>
         </CardContent>
       </Paper>
