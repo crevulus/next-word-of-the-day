@@ -142,7 +142,7 @@ export async function getStaticProps(context) {
   });
 
   // Twitter API
-  const tweetsRes = await fetch(
+  const twitterSearchRes = await fetch(
     `https://api.twitter.com/1.1/search/tweets.json?q=${context.params.word}&lang=en&result_type=popular&count=3`,
     {
       method: "GET",
@@ -158,10 +158,14 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
-  const tweetsData = await tweetsRes.json();
+  const twitterSearchData = await twitterSearchRes.json();
+
+  console.log(twitterSearchData);
 
   const tweetsRes = await fetch(
-    `https://publish.twitter.com/oembed?url=${tweetsData.statuses[0].entities.urls[0].expanded_url}`,
+    `https://publish.twitter.com/oembed?url=https://twitter.com/test/status/${parseInt(
+      twitterSearchData.statuses[0].id_str
+    )}`,
     {
       method: "GET",
       headers: {
