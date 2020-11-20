@@ -24,30 +24,29 @@ export default function SimpleCard(props) {
               <em>"{props.examples}"</em>
             </Typography>
           )}
-          <Typography color="secondary">
-            {props.synonyms && (
-              <div>
-                <span style={{ color: "black" }}>Similar to: </span>
-                {props.synonyms.map((synonym, i) => {
-                  if (i === props.synonyms.length - 1) {
-                    return (
+
+          {props.synonyms && (
+            <Typography color="secondary">
+              <span style={{ color: "black" }}>Similar to: </span>
+              {props.synonyms.map((synonym, i) => {
+                if (i === props.synonyms.length - 1) {
+                  return (
+                    <Link key={i} href={`/definition/${synonym}`}>
+                      {synonym}
+                    </Link>
+                  );
+                } else
+                  return (
+                    <span>
                       <Link key={i} href={`/definition/${synonym}`}>
                         {synonym}
                       </Link>
-                    );
-                  } else
-                    return (
-                      <span>
-                        <Link key={i} href={`/definition/${synonym}`}>
-                          {synonym}
-                        </Link>
-                        {", "}
-                      </span>
-                    );
-                })}
-              </div>
-            )}
-          </Typography>
+                      {", "}
+                    </span>
+                  );
+              })}
+            </Typography>
+          )}
         </CardContent>
       </Paper>
     </Grid>
