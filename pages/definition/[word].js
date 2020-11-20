@@ -39,6 +39,7 @@ class Definition extends Component {
         definition={obj.definition}
         example={obj.example}
         permalink={obj.permalink}
+        audioClip={obj.sound_urls[0]}
         key={i}
       />
     ));
