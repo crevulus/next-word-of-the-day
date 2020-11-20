@@ -8,9 +8,11 @@ import Head from "next/head";
 import Layout from "../../components/Layout";
 import SimpleCard from "../../components/SimpleCard";
 
+import styles from "../styles/definitions.module.scss";
+
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
+import UrbanCard from "../../components/UrbanCard";
 
 class Definition extends Component {
   constructor({ router }, ...props) {
@@ -27,6 +29,17 @@ class Definition extends Component {
         definition={obj.definition}
         category={obj.partOfSpeech}
         synonyms={obj.synonyms}
+        examples={obj.examples}
+        key={i}
+      />
+    ));
+
+    const urbanCards = this.props.dirtyWordsData.list.map((obj, i) => (
+      <UrbanCard
+        definition={obj.definition}
+        example={obj.example}
+        permalink={obj.permalink}
+        audioClip={obj.sound_urls[0]}
         key={i}
       />
     ));
@@ -34,36 +47,55 @@ class Definition extends Component {
     return (
       <Layout>
         <Head>
-          <title>Musical Dictionary | {this.props.searchTerm}</title>
+          <title>Pop Culture Dictionary | {this.props.searchTerm}</title>
           <meta name="twitter:card" content="summary"></meta>
         </Head>
-        <Container>
-          <div className="header-container">
-            <Typography variant="h1" gutterBottom>
-              {this.props.searchTerm}
-            </Typography>
-            <iframe
-              src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
-              width="300"
-              height="80"
-              frameBorder="0"
-              allowtransparency="true"
-              allow="encrypted-media"
-            ></iframe>
+        <div className={styles.pageContainer}>
+          <Typography variant="h1" gutterBottom>
+            {this.props.searchTerm}
+          </Typography>
+          <div className={styles.contentsContainer}>
+            <div className={styles.definitionsContainer}>
+              <Typography variant="h4" gutterBottom>
+                Definitions
+              </Typography>
+              <Grid
+                container
+                spacing={2}
+                className="cards-container"
+                direction="column"
+                alignItems="left"
+              >
+                <Typography variant="h5" gutterBottom>
+                  Standard Dictionary
+                </Typography>
+                {wordCards}
+                <Typography variant="h5" gutterBottom>
+                  Urban Dictionary
+                </Typography>
+                {urbanCards}
+              </Grid>
+            </div>
+            <div className={styles.cultureContainer}>
+              <iframe
+                src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
+                width="300"
+                height="380"
+                frameBorder="0"
+                allowtransparency="true"
+                allow="encrypted-media"
+              ></iframe>
+              <script
+                async
+                src="https://platform.twitter.com/widgets.js"
+                charSet="utf-8"
+              ></script>
+              <div
+                dangerouslySetInnerHTML={{ __html: this.props.tweetsData.html }}
+              />
+            </div>
           </div>
-          <Grid
-            container
-            spacing={2}
-            className="cards-container"
-            direction="column"
-            alignItems="center"
-          >
-            {wordCards}
-          </Grid>
-          <div
-            dangerouslySetInnerHTML={{ __html: this.props.tweetsData.html }}
-          />
-        </Container>
+        </div>
       </Layout>
     );
   }
@@ -166,7 +198,7 @@ export async function getStaticProps(context) {
   let tweetIDs = twitterSearchData.statuses[0].id_str;
 
   const tweetsRes = await fetch(
-    `https://publish.twitter.com/oembed?url=https://twitter.com/test/status/${tweetIDs}`,
+    `https://publish.twitter.com/oembed?url=https://twitter.com/test/status/${tweetIDs}&conversation=none&theme=dark`,
     {
       method: "GET",
       headers: {
@@ -183,11 +215,31 @@ export async function getStaticProps(context) {
     });
   const tweetsData = await tweetsRes.json();
 
+  // Urban Dictionary API
+  const dirtyWordsRes = await fetch(
+    `https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${context.params.word}`,
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-key": process.env.NEXT_PUBLIC_DB_KEY,
+        "x-rapidapi-host": "mashape-community-urban-dictionary.p.rapidapi.com",
+      },
+    }
+  )
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  const dirtyWordsData = await dirtyWordsRes.json();
+
   return {
     props: {
       wordsData,
       songsData: filteredSongsArray,
       tweetsData,
+      dirtyWordsData,
       searchTerm: context.params.word,
     },
     revalidate: 604800,

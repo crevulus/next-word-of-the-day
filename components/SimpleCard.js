@@ -1,7 +1,5 @@
 import React from "react";
 
-import theme from "../styles/theme";
-
 import Link from "next/link";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,26 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
-
 export default function SimpleCard(props) {
-  const classes = useStyles();
-
   return (
     <Grid item xs={12}>
       <Paper elevation={3}>
@@ -40,7 +19,11 @@ export default function SimpleCard(props) {
           <Typography color="primary" variant="h5" gutterBottom>
             {props.definition}
           </Typography>
-
+          {props.examples && (
+            <Typography variant="h6" gutterBottom>
+              <em>"{props.examples}"</em>
+            </Typography>
+          )}
           <Typography color="secondary">
             {props.synonyms && (
               <div>

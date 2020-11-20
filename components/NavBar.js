@@ -1,5 +1,7 @@
 import React from "react";
 
+import Link from "next/link";
+
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -21,9 +23,11 @@ export default function NavBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar variant="dense">
-          <Typography variant="h6" color="inherit">
-            Musical Dictionary
-          </Typography>
+          <Link href="/">
+            <Typography variant="h6" color="inherit" className="link">
+              Pop Culture Dictionary
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

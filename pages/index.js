@@ -27,11 +27,28 @@ export class Home extends Component {
   render() {
     return (
       <Layout>
-        <h1>Welcome to the Musical Dictionary</h1>
+        <h1>Welcome to the Pop Culture Dictionary</h1>
+        <h3>
+          This is a place for English learners to get dictionary definitions{" "}
+          <em>and</em> see how those words are used in real life.
+        </h3>
+        <h3>Here's how it works:</h3>
+        <ol>
+          <li>Search for a word below.</li>
+          <li>See the meaning, examples, and similar words.</li>
+          <li>
+            Get a Spotify recommendation based on that word and see how it is
+            used in music.
+          </li>
+          <li>
+            Read the latest tweets using that word and see how native English
+            speakers are using it.
+          </li>
+        </ol>
         <form>
           <TextField
             id="standard-basic"
-            label="Search for words..."
+            label="Search for a word..."
             type="text"
             value={this.state.searchTerm}
             onChange={this.enterSearch}
