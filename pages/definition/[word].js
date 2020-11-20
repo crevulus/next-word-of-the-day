@@ -60,6 +60,9 @@ class Definition extends Component {
           >
             {wordCards}
           </Grid>
+          <div
+            dangerouslySetInnerHTML={{ __html: this.props.tweetsData.html }}
+          />
         </Container>
       </Layout>
     );
@@ -160,12 +163,10 @@ export async function getStaticProps(context) {
     });
   const twitterSearchData = await twitterSearchRes.json();
 
-  console.log(twitterSearchData);
+  let tweetIDs = twitterSearchData.statuses[0].id_str;
 
   const tweetsRes = await fetch(
-    `https://publish.twitter.com/oembed?url=https://twitter.com/test/status/${parseInt(
-      twitterSearchData.statuses[0].id_str
-    )}`,
+    `https://publish.twitter.com/oembed?url=https://twitter.com/test/status/${tweetIDs}`,
     {
       method: "GET",
       headers: {
