@@ -35,6 +35,10 @@ class MyDocument extends Document {
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           ></script>
+          <meta
+            name="ahrefs-site-verification"
+            content="3498fcbf1b50bbad07a7277a213ad006c6afb000bebb38839d620e8a2405e060"
+          ></meta>
         </Head>
         <body>
           <Main />

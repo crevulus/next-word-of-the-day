@@ -13,7 +13,6 @@ export const resolvers = {
         }
       )
         .then((response) => {
-          console.log(response);
           return response;
         })
         .catch((err) => {
