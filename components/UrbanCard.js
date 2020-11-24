@@ -14,13 +14,13 @@ export default function UrbanCard(props) {
   }
   return (
     <Grid item xs={12}>
-      <Paper elevation={3}>
-        <CardContent>
-          <Typography color="primary" variant="h6">
+      <Paper elevation={3} style={{ backgroundColor: "#edf6f9" }}>
+        <CardContent style={{ textShadow: "none" }}>
+          <Typography variant="h6">
             {replaceBrackets(props.definition)}
           </Typography>
-          <Typography color="secondary" variant="subtitle1">
-            {replaceBrackets(props.example)}
+          <Typography color="primary" variant="subtitle1">
+            <em>"{replaceBrackets(props.example)}"</em>
           </Typography>
         </CardContent>
       </Paper>

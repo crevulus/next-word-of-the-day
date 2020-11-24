@@ -2,7 +2,6 @@ import React from "react";
 
 import Link from "next/link";
 
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -32,14 +31,14 @@ export default function SimpleCard(props) {
                 if (i === props.synonyms.length - 1) {
                   return (
                     <Link key={i} href={`/definition/${synonym}`}>
-                      {synonym}
+                      <a style={{ textDecoration: "underline" }}>{synonym}</a>
                     </Link>
                   );
                 } else
                   return (
                     <span>
                       <Link key={i} href={`/definition/${synonym}`}>
-                        {synonym}
+                        <a style={{ textDecoration: "underline" }}>{synonym}</a>
                       </Link>
                       {", "}
                     </span>

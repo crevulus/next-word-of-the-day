@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import accessTokenReducer from "./accessTokenReducers";
+import choicesReducer from "./choicesReducers";
 
 const rootReducer = combineReducers({
-  accessToken: accessTokenReducer,
+  choice: choicesReducer,
 });
 
 export default rootReducer;

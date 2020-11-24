@@ -53,14 +53,22 @@ export class Home extends Component {
         </ol>
         <form>
           <TextField
-            id="standard-basic"
+            style={{ textShadow: "none" }}
+            id="outlined-secondary"
+            variant="outlined"
             label="Search for a word..."
             type="text"
             value={this.state.searchTerm}
             onChange={this.enterSearch}
+            color="secondary"
           />
           <Link href={`/definition/${this.state.searchTerm}`}>
-            <Button type="submit" variant="contained" color="secondary">
+            <Button
+              style={{ color: "white" }}
+              type="submit"
+              variant="contained"
+              color="secondary"
+            >
               Search
             </Button>
           </Link>
