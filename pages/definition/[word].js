@@ -7,12 +7,12 @@ import Head from "next/head";
 
 import Layout from "../../components/Layout";
 import SimpleCard from "../../components/SimpleCard";
+import UrbanCard from "../../components/UrbanCard";
 
 import styles from "../styles/definitions.module.scss";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import UrbanCard from "../../components/UrbanCard";
 
 class Definition extends Component {
   constructor({ router }, ...props) {
@@ -47,7 +47,7 @@ class Definition extends Component {
     return (
       <Layout>
         <Head>
-          <title>Pop Culture Dictionary | {this.props.searchTerm}</title>
+          <title>English Vocabulary In Use | {this.props.searchTerm}</title>
           <meta name="twitter:card" content="summary"></meta>
         </Head>
         <div className={styles.pageContainer}>
@@ -247,7 +247,7 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { word: "incredible" } }],
+    paths: [{ params: { word: "help" } }],
     fallback: true,
   };
 }

@@ -11,17 +11,17 @@ import Grid from "@material-ui/core/Grid";
 export default function SimpleCard(props) {
   return (
     <Grid item xs={12}>
-      <Paper elevation={3}>
-        <CardContent>
+      <Paper elevation={3} style={{ backgroundColor: "#edf6f9" }}>
+        <CardContent style={{ textShadow: "none" }}>
           <Typography color="secondary" variant="h6">
             <em>{props.category}</em>
           </Typography>
-          <Typography color="primary" variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             {props.definition}
           </Typography>
           {props.examples && (
-            <Typography variant="h6" gutterBottom>
-              <em>"{props.examples}"</em>
+            <Typography color="primary" variant="h6" gutterBottom>
+              <em>"{props.examples[0]}"</em>
             </Typography>
           )}
 

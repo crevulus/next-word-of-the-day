@@ -29,7 +29,10 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta property="custom" content="test" />
+          <meta
+            name="description"
+            content="Your free & open Culture Dictionary for English learners. Want to know how a word is really used in modern, contemporary English? Search now!"
+          />
           <script
             data-ad-client="ca-pub-1448673172216186"
             async

@@ -17,7 +17,9 @@ export class Layout extends Component {
       <ThemeProvider theme={theme}>
         <div>
           <Head>
-            <title>Musical Dictionary</title>
+            <title>
+              English Culture Dictionary: How are words REALLY used?
+            </title>
           </Head>
           <NavBar />
           {this.props.children}

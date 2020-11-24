@@ -34,15 +34,21 @@ export class Home extends Component {
         </h3>
         <h3>Here's how it works:</h3>
         <ol>
-          <li>Search for a word below.</li>
+          <li>Search for a word in our Pop Culture English dictionary.</li>
           <li>See the meaning, examples, and similar words.</li>
           <li>
-            Get a Spotify recommendation based on that word and see how it is
-            used in music.
+            Get a <strong>Spotify</strong> recommendation based on that word and
+            see how it is used in music.
           </li>
           <li>
-            Read the latest tweets using that word and see how native English
-            speakers are using it.
+            Read the latest <strong>Tweets</strong> using that word and see how
+            native English speakers are using it.
+          </li>
+          <li>
+            See suggestions from <strong>Urban Dictionary</strong> so you get
+            more than just a standard textbook definition. English is a{" "}
+            <em>living</em> language that changes regularly; keep up to date
+            with contemporary meanings!
           </li>
         </ol>
         <form>
@@ -71,3 +77,8 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = { addAccessToken };
 
 export default connect(mapStateToProps, mapActionsToProps)(Home);
+
+// SEO terms:
+// - contemporary
+// - online
+// - oxford
