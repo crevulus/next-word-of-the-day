@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { toggleChoice } from "../redux/actions/choicesActions";
+import { toggleExplicit, toggleNiche } from "../redux/actions/choicesActions";
 
 import Link from "next/link";
 
@@ -26,12 +26,16 @@ export class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      explicitChecked: false,
-      nicheChecked: false,
+      explicit: false,
+      niche: false,
     };
   }
   handleChange = (event) => {
-    this.props.toggleChoice(event.target.checked);
+    if (event.target.name === "explicit") {
+      this.props.toggleExplicit(event.target.checked);
+    } else if (event.target.name === "niche") {
+      this.props.toggleNiche(event.target.checked);
+    }
     this.setState({ [event.target.name]: event.target.checked });
   };
 
@@ -68,7 +72,7 @@ export class NavBar extends Component {
                     <Checkbox
                       checked={this.state.nicheChecked}
                       onChange={this.handleChange}
-                      name="nicheChecked"
+                      name="niche"
                     />
                   }
                   label="Niche"
@@ -87,7 +91,7 @@ export class NavBar extends Component {
                     <Checkbox
                       checked={this.state.explicitChecked}
                       onChange={this.handleChange}
-                      name="explicitChecked"
+                      name="explicit"
                     />
                   }
                   label="Explicit"
@@ -102,9 +106,9 @@ export class NavBar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  choice: state.choice,
+  choices: state.choices,
 });
 
-const mapActionsToProps = { toggleChoice };
+const mapActionsToProps = { toggleExplicit, toggleNiche };
 
 export default connect(mapStateToProps, mapActionsToProps)(NavBar);

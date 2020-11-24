@@ -1,6 +1,12 @@
-export const TOGGLE_CHOICE = "TOGGLE_CHOICE";
+export const TOGGLE_EXPLICIT = "TOGGLE_EXPLICIT";
+export const TOGGLE_NICHE = "TOGGLE_NICHE";
 
-export const toggleChoice = (value) => ({
-  type: TOGGLE_CHOICE,
+export const toggleExplicit = (value) => ({
+  type: TOGGLE_EXPLICIT,
+  payload: value,
+});
+
+export const toggleNiche = (value) => ({
+  type: TOGGLE_NICHE,
   payload: value,
 });
