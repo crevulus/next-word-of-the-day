@@ -2,8 +2,9 @@ import React, { Component } from "react";
 
 import store from "../../redux/store";
 const reduxStore = store.getState();
-
 import { connect } from "react-redux";
+
+import { Tweet } from "react-twitter-widgets";
 
 import { withRouter } from "next/router";
 import Head from "next/head";
@@ -50,7 +51,7 @@ class Definition extends Component {
     return (
       <Layout>
         <Head>
-          <title>English Vocabulary In Use | {this.props.searchTerm}</title>
+          <title>{this.props.searchTerm} | English Vocabulary In Use</title>
           <meta name="twitter:card" content="summary"></meta>
         </Head>
         <div className={styles.pageContainer}>
@@ -87,13 +88,9 @@ class Definition extends Component {
                 allowtransparency="true"
                 allow="encrypted-media"
               ></iframe>
-              <script
-                async
-                src="https://platform.twitter.com/widgets.js"
-                charSet="utf-8"
-              ></script>
-              <div
-                dangerouslySetInnerHTML={{ __html: this.props.tweetsData.html }}
+              <Tweet
+                tweetId={this.props.tweetID}
+                options={{ lang: "en", theme: "dark" }}
               />
             </div>
           </div>
@@ -207,25 +204,25 @@ export async function getStaticProps(context) {
     });
   const twitterSearchData = await twitterSearchRes.json();
 
-  let tweetIDs = twitterSearchData.statuses[0].id_str;
+  let tweetID = twitterSearchData.statuses[0].id_str;
 
-  const tweetsRes = await fetch(
-    `https://publish.twitter.com/oembed?url=https://twitter.com/test/status/${tweetIDs}&conversation=none&theme=dark`,
-    {
-      method: "GET",
-      headers: {
-        authorization:
-          "Bearer " + process.env.NEXT_PUBLIC_TWITTER_API_BEARER_TOKEN,
-      },
-    }
-  )
-    .then((response) => {
-      return response;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  const tweetsData = await tweetsRes.json();
+  // const tweetsRes = await fetch(
+  //   `https://publish.twitter.com/oembed?url=https://twitter.com/test/status/${tweetID}&conversation=none&theme=dark`,
+  //   {
+  //     method: "GET",
+  //     headers: {
+  //       authorization:
+  //         "Bearer " + process.env.NEXT_PUBLIC_TWITTER_API_BEARER_TOKEN,
+  //     },
+  //   }
+  // )
+  //   .then((response) => {
+  //     return response;
+  //   })
+  //   .catch((err) => {
+  //     console.error(err);
+  //   });
+  // const tweetsData = await tweetsRes.json();
 
   // Urban Dictionary API
   const dirtyWordsRes = await fetch(
@@ -250,7 +247,7 @@ export async function getStaticProps(context) {
     props: {
       wordsData,
       songsData: filteredSongsArray,
-      tweetsData,
+      tweetID,
       dirtyWordsData,
       searchTerm: context.params.word,
     },

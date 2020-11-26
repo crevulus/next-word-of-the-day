@@ -13,6 +13,7 @@ import CookieConsent from "react-cookie-consent";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Layout from "../components/Layout";
+import Search from "../components/Search";
 
 export class Home extends Component {
   constructor(props) {
@@ -82,28 +83,7 @@ export class Home extends Component {
             with contemporary meanings!
           </li>
         </ol>
-        <form>
-          <TextField
-            style={{ textShadow: "none" }}
-            id="outlined-secondary"
-            variant="outlined"
-            label="Search for a word..."
-            type="text"
-            value={this.state.searchTerm}
-            onChange={this.enterSearch}
-            color="secondary"
-          />
-          <Link href={`/definition/${this.state.searchTerm}`}>
-            <Button
-              style={{ color: "white" }}
-              type="submit"
-              variant="contained"
-              color="secondary"
-            >
-              Search
-            </Button>
-          </Link>
-        </form>
+        <Search />
       </Layout>
     );
   }
