@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import Link from "next/link";
 
+import styles from "../pages/styles/search.module.scss";
+
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
@@ -20,21 +22,23 @@ export default class Search extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.searchContainer}>
         <form>
-          <TextField
-            style={{ textShadow: "none" }}
-            id="outlined-secondary"
-            variant="outlined"
-            label="Search for a word..."
-            type="text"
-            value={this.state.searchTerm}
-            onChange={this.enterSearch}
-            color="secondary"
-          />
+          <div className={styles.searchBox}>
+            <TextField
+              id="outlined-secondary"
+              variant="outlined"
+              label="Search for a word..."
+              type="text"
+              value={this.state.searchTerm}
+              onChange={this.enterSearch}
+              color="secondary"
+              fullWidth
+            />
+          </div>
           <Link href={`/definition/${this.state.searchTerm}`}>
             <Button
-              style={{ color: "white" }}
+              className={styles.searchButton}
               type="submit"
               variant="contained"
               color="secondary"

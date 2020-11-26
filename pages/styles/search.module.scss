@@ -1,0 +1,19 @@
+.searchContainer {
+  margin: 1rem;
+  padding: 2rem;
+  height: 8rem;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px #555;
+  background-color: white;
+}
+
+.searchBox {
+  text-shadow: none;
+  margin-bottom: 1rem;
+}
+
+.searchButton {
+  position: fixed;
+  float: right;
+  color: white;
+}

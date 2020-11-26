@@ -18,6 +18,10 @@ a {
   box-sizing: border-box;
 }
 
+main {
+  padding: 20px;
+}
+
 .link {
   cursor: pointer;
 }

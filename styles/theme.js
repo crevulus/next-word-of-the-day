@@ -11,6 +11,9 @@ const theme = createMuiTheme({
       main: "#edf6f9",
     },
   },
+  disabledButton: {
+    backgroundColor: "red",
+  },
 });
 
 export default theme;

@@ -4,16 +4,11 @@ import { connect } from "react-redux";
 
 import { addAccessToken } from "../redux/actions/accessTokenActions";
 
-import Link from "next/link";
-
 import ReactGA from "react-ga";
 import Cookies from "js-cookie";
 import CookieConsent from "react-cookie-consent";
 
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Layout from "../components/Layout";
-import Search from "../components/Search";
 
 export class Home extends Component {
   constructor(props) {
@@ -83,7 +78,6 @@ export class Home extends Component {
             with contemporary meanings!
           </li>
         </ol>
-        <Search />
       </Layout>
     );
   }

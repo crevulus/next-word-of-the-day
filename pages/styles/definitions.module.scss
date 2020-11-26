@@ -1,10 +1,5 @@
-.pageContainer {
-  padding: 20px;
-}
-
 .contentsContainer {
   display: flex;
-  padding: 10px;
 }
 
 .definitionsContainer {
@@ -17,4 +12,18 @@
   align-items: center;
   justify-content: flex-start;
   max-width: 30%;
+}
+
+@media only screen and (max-width: 600px) {
+  .contentsContainer {
+    display: inherit;
+  }
+
+  .definitionsContainer {
+    width: 100%;
+  }
+
+  .cultureContainer {
+    max-width: 100%;
+  }
 }

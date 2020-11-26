@@ -63,19 +63,26 @@ class Definition extends Component {
               <Typography variant="h4" gutterBottom>
                 Definitions
               </Typography>
+              <Typography variant="h5" gutterBottom>
+                Standard Dictionary
+              </Typography>
               <Grid
                 container
                 spacing={2}
                 className="cards-container"
                 direction="column"
               >
-                <Typography variant="h5" gutterBottom>
-                  Standard Dictionary
-                </Typography>
                 {wordCards}
-                <Typography variant="h5" gutterBottom>
-                  Urban Dictionary
-                </Typography>
+              </Grid>
+              <Typography variant="h5" gutterBottom>
+                Urban Dictionary
+              </Typography>
+              <Grid
+                container
+                spacing={2}
+                className="cards-container"
+                direction="column"
+              >
                 {urbanCards}
               </Grid>
             </div>
