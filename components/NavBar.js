@@ -50,7 +50,7 @@ export class NavBar extends Component {
                 Pop Culture Dictionary
               </Typography>
             </Link>
-            <FormGroup row>
+            {/* <FormGroup row>
               <HtmlTooltip
                 title={
                   <Typography color="inherit">
@@ -70,7 +70,7 @@ export class NavBar extends Component {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.nicheChecked}
+                      checked={this.props.choices.niche}
                       onChange={this.handleChange}
                       name="niche"
                     />
@@ -89,7 +89,7 @@ export class NavBar extends Component {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.explicitChecked}
+                      checked={this.props.choices.explicit}
                       onChange={this.handleChange}
                       name="explicit"
                     />
@@ -97,7 +97,7 @@ export class NavBar extends Component {
                   label="Explicit"
                 />
               </HtmlTooltip>
-            </FormGroup>
+            </FormGroup> */}
           </Toolbar>
         </AppBar>
       </div>

@@ -6,6 +6,10 @@ import { addAccessToken } from "../redux/actions/accessTokenActions";
 
 import Link from "next/link";
 
+import ReactGA from "react-ga";
+import Cookies from "js-cookie";
+import CookieConsent from "react-cookie-consent";
+
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Layout from "../components/Layout";
@@ -16,8 +20,16 @@ export class Home extends Component {
     this.state = {
       searchTerm: "",
       accessToken: "",
+      cookieConsent: Cookies.get("CookieConsent"),
     };
   }
+
+  setTrackingCookies = () => {
+    Cookies.set("CookieConsent", "true");
+    Cookies.set("CookieConsent-legacy", "true");
+    ReactGA.initialize("UA-169238413-2");
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  };
 
   enterSearch = (e) => {
     e.preventDefault();
@@ -27,6 +39,25 @@ export class Home extends Component {
   render() {
     return (
       <Layout>
+        <CookieConsent
+          style={{ alignItems: "center" }}
+          enableDeclineButton
+          onAccept={() => [this.setTrackingCookies()]}
+          onDecline={() => {
+            this.showModal("cookieModalShow");
+          }}
+          buttonText="Accept"
+          buttonStyle={{ backgroundColor: "#009785", color: "white" }}
+          declineButtonText="Reject"
+          declineButtonStyle={{
+            backgroundColor: "#FFC749",
+            color: "#000000",
+          }}
+          overlay
+        >
+          This website uses cookies to enhance user experience. Cookies will be
+          used for analytics, personalised content, and third-party tracking.
+        </CookieConsent>
         <h1>Welcome to the Pop Culture Dictionary</h1>
         <h3>
           This is a place for English learners to get dictionary definitions{" "}
