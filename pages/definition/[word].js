@@ -28,25 +28,32 @@ class Definition extends Component {
       return <h4>Loading...</h4>;
     }
 
-    const wordCards = this.props.wordsData.results.map((obj, i) => (
-      <SimpleCard
-        definition={obj.definition}
-        category={obj.partOfSpeech}
-        synonyms={obj.synonyms}
-        examples={obj.examples}
-        key={i}
-      />
-    ));
+    let wordCards;
+    let urbanCards;
 
-    const urbanCards = this.props.dirtyWordsData.list.map((obj, i) => (
-      <UrbanCard
-        definition={obj.definition}
-        example={obj.example}
-        permalink={obj.permalink}
-        audioClip={obj.sound_urls[0]}
-        key={i}
-      />
-    ));
+    if (this.props.wordsData) {
+      wordCards = this.props.wordsData.results.map((obj, i) => (
+        <SimpleCard
+          definition={obj.definition}
+          category={obj.partOfSpeech}
+          synonyms={obj.synonyms}
+          examples={obj.examples}
+          key={i}
+        />
+      ));
+    }
+
+    if (this.props.dirtyWordsData) {
+      urbanCards = this.props.dirtyWordsData.list.map((obj, i) => (
+        <UrbanCard
+          definition={obj.definition}
+          example={obj.example}
+          permalink={obj.permalink}
+          audioClip={obj.sound_urls[0]}
+          key={i}
+        />
+      ));
+    }
 
     return (
       <Layout>
@@ -72,7 +79,11 @@ class Definition extends Component {
                 className="cards-container"
                 direction="column"
               >
-                {wordCards}
+                {this.props.wordsData ? (
+                  wordCards
+                ) : (
+                  <SimpleCard definition="There are no dictionary results for this word." />
+                )}
               </Grid>
               <Typography variant="h5" gutterBottom>
                 Urban Dictionary
@@ -83,7 +94,11 @@ class Definition extends Component {
                 className="cards-container"
                 direction="column"
               >
-                {urbanCards}
+                {this.props.dirtyWordsData ? (
+                  urbanCards
+                ) : (
+                  <SimpleCard definition="There are no dictionary results for this word." />
+                )}
               </Grid>
             </div>
             <div className={styles.cultureContainer}>
@@ -125,13 +140,12 @@ export async function getStaticProps(context) {
       },
     }
   )
-    .then((response) => {
+    .then(async (response) => {
       return response;
     })
     .catch((err) => {
       console.error(err);
     });
-  const wordsData = await wordsRes.json();
 
   // Spotify API
   let fetchedToken = await fetch("https://accounts.spotify.com/api/token", {
@@ -182,7 +196,6 @@ export async function getStaticProps(context) {
         return;
       }
     } else if (reduxStore.choices.explicit === true) {
-      console.log("true");
       if (regexTest === false) {
         return;
       } else {
@@ -191,6 +204,8 @@ export async function getStaticProps(context) {
       }
     }
   });
+
+  // console.log(context);
 
   // Twitter API
   const twitterSearchRes = await fetch(
@@ -248,7 +263,18 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
-  const dirtyWordsData = await dirtyWordsRes.json();
+
+  let wordsData = await wordsRes.json();
+
+  if (!wordsData.results) {
+    wordsData = null;
+  }
+
+  let dirtyWordsData = await dirtyWordsRes.json();
+
+  if (!dirtyWordsData.list) {
+    dirtyWordsData = null;
+  }
 
   return {
     props: {
