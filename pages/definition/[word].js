@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import store from "../../redux/store";
 const reduxStore = store.getState();
 import { connect } from "react-redux";
+import { toggleSearching } from "../../redux/actions/searchActions";
 
 import { Tweet } from "react-twitter-widgets";
 
@@ -124,9 +125,15 @@ class Definition extends Component {
 
 const mapStateToProps = (state) => ({
   accessToken: state.accessToken,
+  search: state.search,
 });
 
-export default connect(mapStateToProps, null)(withRouter(Definition));
+const mapActionsToProps = { toggleSearching };
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withRouter(Definition));
 
 export async function getStaticProps(context) {
   // wordsAPI
