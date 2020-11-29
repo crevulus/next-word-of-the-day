@@ -18,10 +18,14 @@ import styles from "../styles/definitions.module.scss";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { Button } from "@material-ui/core";
 
 class Definition extends Component {
   constructor({ router }, ...props) {
     super({ router }, ...props);
+    this.state = {
+      urban: false,
+    };
   }
 
   render() {
@@ -89,18 +93,27 @@ class Definition extends Component {
               <Typography variant="h5" gutterBottom>
                 Urban Dictionary
               </Typography>
-              <Grid
-                container
-                spacing={2}
-                className="cards-container"
-                direction="column"
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => this.setState({ urban: !this.state.urban })}
               >
-                {this.props.dirtyWordsData ? (
-                  urbanCards
-                ) : (
-                  <SimpleCard definition="There are no dictionary results for this word." />
-                )}
-              </Grid>
+                Show Urban Dictionary Results
+              </Button>
+              {this.state.urban ? (
+                <Grid
+                  container
+                  spacing={2}
+                  className="cards-container"
+                  direction="column"
+                >
+                  {this.props.dirtyWordsData ? (
+                    urbanCards
+                  ) : (
+                    <SimpleCard definition="There are no dictionary results for this word." />
+                  )}
+                </Grid>
+              ) : null}
             </div>
             <div className={styles.cultureContainer}>
               <iframe
@@ -112,7 +125,11 @@ class Definition extends Component {
                 allow="encrypted-media"
               ></iframe>
               <Tweet
-                tweetId={this.props.tweetID}
+                tweetId={this.props.tweetID0}
+                options={{ lang: "en", theme: "dark", width: 800 }}
+              />
+              <Tweet
+                tweetId={this.props.tweetID1}
                 options={{ lang: "en", theme: "dark" }}
               />
             </div>
@@ -233,7 +250,8 @@ export async function getStaticProps(context) {
     });
   const twitterSearchData = await twitterSearchRes.json();
 
-  let tweetID = twitterSearchData.statuses[0].id_str;
+  let tweetID0 = twitterSearchData.statuses[0].id_str;
+  let tweetID1 = twitterSearchData.statuses[1].id_str;
 
   // const tweetsRes = await fetch(
   //   `https://publish.twitter.com/oembed?url=https://twitter.com/test/status/${tweetID}&conversation=none&theme=dark`,
@@ -287,7 +305,8 @@ export async function getStaticProps(context) {
     props: {
       wordsData,
       songsData: filteredSongsArray,
-      tweetID,
+      tweetID0,
+      tweetID1,
       dirtyWordsData,
       searchTerm: context.params.word,
     },
