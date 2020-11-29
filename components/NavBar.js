@@ -55,7 +55,7 @@ export class NavBar extends Component {
                   justifyContent: "space-between",
                 }}
               >
-                <HomeIcon style={{ fontSize: "2rem" }} />
+                <HomeIcon style={{ fontSize: "2rem", paddingRight: "5px" }} />
                 English Culture Dictionary
               </Typography>
             </Link>

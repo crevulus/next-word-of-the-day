@@ -54,27 +54,66 @@ export class Home extends Component {
           This website uses cookies to enhance user experience. Cookies will be
           used for analytics, personalised content, and third-party tracking.
         </CookieConsent>
-        <h1>Welcome to the Pop Culture Dictionary</h1>
+        <h1>
+          Welcome to the{" "}
+          <strong style={{ color: "#e29578" }}>
+            English Culture Dictionary
+          </strong>
+        </h1>
         <h3>
-          This is a place for English learners to get dictionary definitions{" "}
-          <em>and</em> see how those words are used in real life.
+          This is a place for English learners to get{" "}
+          <strong style={{ color: "#e29578", textShadow: "1px 1px 1px #999" }}>
+            dictionary definitions{" "}
+          </strong>
+          <em>and</em> see how those words are used in{" "}
+          <strong style={{ color: "#e29578", textShadow: "1px 1px 1px #999" }}>
+            real life, pop culture examples.
+          </strong>
         </h3>
         <h3>Here's how it works:</h3>
-        <ol>
+        <ol
+          style={{
+            lineHeight: 1.4,
+            fontSize: 19,
+          }}
+        >
           <li>Search for a word in our Pop Culture English dictionary.</li>
-          <li>See the meaning, examples, and similar words.</li>
           <li>
-            Get a <strong>Spotify</strong> recommendation based on that word and
-            see how it is used in music.
+            See the{" "}
+            <strong
+              style={{ color: "#e29578", textShadow: "1px 1px 1px #CCC" }}
+            >
+              dictionary definition
+            </strong>
+            : meaning, examples, and similar words.
           </li>
           <li>
-            Read the latest <strong>Tweets</strong> using that word and see how
-            native English speakers are using it.
+            Get a{" "}
+            <strong
+              style={{ color: "#e29578", textShadow: "1px 1px 1px #CCC" }}
+            >
+              Spotify
+            </strong>{" "}
+            recommendation based on that word and see how it is used in music.
           </li>
           <li>
-            See suggestions from <strong>Urban Dictionary</strong> so you get
-            more than just a standard textbook definition. English is a{" "}
-            <em>living</em> language that changes regularly; keep up to date
+            Read the latest{" "}
+            <strong
+              style={{ color: "#e29578", textShadow: "1px 1px 1px #CCC" }}
+            >
+              Tweets
+            </strong>{" "}
+            using that word and see how native English speakers are using it.
+          </li>
+          <li>
+            See suggestions from{" "}
+            <strong
+              style={{ color: "#e29578", textShadow: "1px 1px 1px #CCC" }}
+            >
+              Urban Dictionary
+            </strong>{" "}
+            so you get more than just a standard textbook definition. English is
+            a <em>living</em> language that changes regularly; keep up to date
             with contemporary meanings!
           </li>
         </ol>

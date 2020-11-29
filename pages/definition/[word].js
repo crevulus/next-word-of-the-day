@@ -19,6 +19,9 @@ import styles from "../styles/definitions.module.scss";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import MusicNoteIcon from "@material-ui/icons/MusicNote";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 class Definition extends Component {
   constructor({ router }, ...props) {
@@ -67,8 +70,23 @@ class Definition extends Component {
           <meta name="twitter:card" content="summary"></meta>
         </Head>
         <div className={styles.pageContainer}>
-          <Typography variant="h1" gutterBottom>
+          <Typography
+            className={styles.headerContainer}
+            variant="h1"
+            gutterBottom
+          >
             {this.props.searchTerm}
+            <a href="#cultureContainer">
+              <Button
+                color="secondary"
+                variant="contained"
+                className={styles.bookmarkBtn}
+              >
+                <TwitterIcon />
+                <MusicNoteIcon />
+                <ArrowDownwardIcon />
+              </Button>
+            </a>
           </Typography>
           <div className={styles.contentsContainer}>
             <div className={styles.definitionsContainer}>
@@ -106,7 +124,7 @@ class Definition extends Component {
                 <Grid
                   container
                   spacing={2}
-                  className={styles.cardsContainer}
+                  className="twitter-tweet"
                   direction="column"
                 >
                   {this.props.dirtyWordsData ? (
@@ -117,23 +135,38 @@ class Definition extends Component {
                 </Grid>
               ) : null}
             </div>
-            <div className={styles.cultureContainer}>
-              <iframe
-                src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
-                width="300"
-                height="380"
-                frameBorder="0"
-                allowtransparency="true"
-                allow="encrypted-media"
-              ></iframe>
-              <Tweet
-                tweetId={this.props.tweetID0}
-                options={{ lang: "en", theme: "dark" }}
-              />
-              <Tweet
-                tweetId={this.props.tweetID1}
-                options={{ lang: "en", theme: "dark" }}
-              />
+            <div className={styles.damnTitle}>
+              <Typography variant="h4" gutterBottom>
+                Pop Culture
+              </Typography>
+              <div id="cultureContainer" className={styles.cultureContainer}>
+                <Typography variant="h5" gutterBottom>
+                  Spotify
+                </Typography>
+                <div className={styles.spotify}>
+                  <iframe
+                    src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
+                    width="300"
+                    height="380"
+                    frameBorder="0"
+                    allowtransparency="true"
+                    allow="encrypted-media"
+                  ></iframe>
+                </div>
+                <Typography variant="h5" gutterBottom>
+                  Twitter
+                </Typography>
+                <div className="tweets">
+                  <Tweet
+                    tweetId={this.props.tweetID0}
+                    options={{ lang: "en", theme: "dark" }}
+                  />
+                  <Tweet
+                    tweetId={this.props.tweetID1}
+                    options={{ lang: "en", theme: "dark" }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -157,7 +190,10 @@ export default connect(
 export async function getStaticProps(context) {
   // wordsAPI
   const wordsRes = await fetch(
-    `https://wordsapiv1.p.rapidapi.com/words/${context.params.word}/`,
+    `https://wordsapiv1.p.rapidapi.com/words/${context.params.word.replace(
+      /#(.*)/,
+      ""
+    )}/`,
     {
       method: "GET",
       headers: {
@@ -193,7 +229,10 @@ export async function getStaticProps(context) {
   const accessToken = fetchedToken.access_token;
 
   const songsRes = await fetch(
-    `https://api.spotify.com/v1/search?q=${context.params.word}&type=track`,
+    `https://api.spotify.com/v1/search?q=${context.params.word.replace(
+      /#(.*)/,
+      ""
+    )}&type=track`,
     {
       method: "GET",
       headers: {
@@ -235,7 +274,10 @@ export async function getStaticProps(context) {
 
   // Twitter API
   const twitterSearchRes = await fetch(
-    `https://api.twitter.com/1.1/search/tweets.json?q=${context.params.word}&lang=en&result_type=popular&count=3`,
+    `https://api.twitter.com/1.1/search/tweets.json?q=${context.params.word.replace(
+      /#(.*)/,
+      ""
+    )}&lang=en&result_type=popular&count=3`,
     {
       method: "GET",
       headers: {
@@ -250,7 +292,33 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.error(err);
     });
-  const twitterSearchData = await twitterSearchRes.json();
+  let twitterSearchData = await twitterSearchRes.json();
+
+  if (
+    twitterSearchData.statuses[0] === undefined ||
+    twitterSearchData.statuses[1] === undefined
+  ) {
+    const backupTwitterSearchRes = await fetch(
+      `https://api.twitter.com/1.1/search/tweets.json?q=${context.params.word.replace(
+        /#(.*)/,
+        ""
+      )}&lang=en&count=3`,
+      {
+        method: "GET",
+        headers: {
+          authorization:
+            "Bearer " + process.env.NEXT_PUBLIC_TWITTER_API_BEARER_TOKEN,
+        },
+      }
+    )
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    twitterSearchData = await backupTwitterSearchRes.json();
+  }
 
   let tweetID0 = twitterSearchData.statuses[0].id_str;
   let tweetID1 = twitterSearchData.statuses[1].id_str;
