@@ -81,7 +81,7 @@ class Definition extends Component {
               <Grid
                 container
                 spacing={2}
-                className="cards-container"
+                className={styles.cardsContainer}
                 direction="column"
               >
                 {this.props.wordsData ? (
@@ -98,13 +98,15 @@ class Definition extends Component {
                 color="secondary"
                 onClick={() => this.setState({ urban: !this.state.urban })}
               >
-                Show Urban Dictionary Results
+                {this.state.urban
+                  ? "Hide Urban Dictionary Results"
+                  : "Show Urban dictionary Results"}
               </Button>
               {this.state.urban ? (
                 <Grid
                   container
                   spacing={2}
-                  className="cards-container"
+                  className={styles.cardsContainer}
                   direction="column"
                 >
                   {this.props.dirtyWordsData ? (
@@ -126,7 +128,7 @@ class Definition extends Component {
               ></iframe>
               <Tweet
                 tweetId={this.props.tweetID0}
-                options={{ lang: "en", theme: "dark", width: 800 }}
+                options={{ lang: "en", theme: "dark" }}
               />
               <Tweet
                 tweetId={this.props.tweetID1}

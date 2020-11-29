@@ -45,9 +45,18 @@ export class NavBar extends Component {
         <AppBar position="static">
           <Toolbar variant="dense" style={{ justifyContent: "space-between" }}>
             <Link href="/">
-              <Typography variant="h6" color="inherit" className="link">
-                <HomeIcon />
-                Pop Culture Dictionary
+              <Typography
+                variant="h6"
+                color="inherit"
+                className="link"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <HomeIcon style={{ fontSize: "2rem" }} />
+                English Culture Dictionary
               </Typography>
             </Link>
             {/* <FormGroup row>

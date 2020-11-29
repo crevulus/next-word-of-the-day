@@ -6,6 +6,11 @@
   width: 70%;
 }
 
+.cardsContainer {
+  margin: inherit !important;
+  margin-bottom: 15px !important;
+}
+
 .cultureContainer {
   display: flex;
   flex-direction: column;
