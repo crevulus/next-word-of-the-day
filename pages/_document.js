@@ -34,7 +34,7 @@ class MyDocument extends Document {
             content="Your free & open Culture Dictionary for English learners. Want to know how a word is really used in modern, contemporary English? Search now!"
           />
           <script
-            data-ad-client="ca-pub-1448673172216186"
+            data-ad-client="ca-pub-4969070216465713"
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           ></script>
