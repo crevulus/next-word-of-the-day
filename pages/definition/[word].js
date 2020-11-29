@@ -253,21 +253,21 @@ export async function getStaticProps(context) {
     const searchTerm = context.params.word.toLowerCase();
     const songRegex = new RegExp("\\b" + searchTerm + "\\b", "g");
     const regexTest = songRegex.test(songTitle);
-    if (reduxStore.choices.explicit === false) {
-      if (obj.explicit === true || regexTest === false) {
-        return;
-      } else {
-        filteredSongsArray.push(obj);
-        return;
-      }
-    } else if (reduxStore.choices.explicit === true) {
-      if (regexTest === false) {
-        return;
-      } else {
-        filteredSongsArray.push(obj);
-        return;
-      }
+    // if (reduxStore.choices.explicit === false) {
+    //   if (obj.explicit === true || regexTest === false) {
+    //     return;
+    //   } else {
+    //     filteredSongsArray.push(obj);
+    //     return;
+    //   }
+    // } else if (reduxStore.choices.explicit === true) {
+    if (regexTest === false) {
+      return;
+    } else {
+      filteredSongsArray.push(obj);
+      return;
     }
+    // }
   });
 
   // console.log(context);

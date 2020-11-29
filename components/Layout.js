@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 import theme from "../styles/theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Search from "./Search";
+import Footer from "./Footer";
 
 export class Layout extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export class Layout extends Component {
           <NavBar />
           <Search />
           <main>{this.props.children}</main>
+          <Footer />
         </div>
       </ThemeProvider>
     );
