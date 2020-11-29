@@ -62,11 +62,11 @@ export class Home extends Component {
         </h1>
         <h3>
           This is a place for English learners to get{" "}
-          <strong style={{ color: "#e29578", textShadow: "1px 1px 1px #999" }}>
+          <strong style={{ color: "#006d77", textShadow: "1px 1px 1px #999" }}>
             dictionary definitions{" "}
           </strong>
           <em>and</em> see how those words are used in{" "}
-          <strong style={{ color: "#e29578", textShadow: "1px 1px 1px #999" }}>
+          <strong style={{ color: "#006d77", textShadow: "1px 1px 1px #999" }}>
             real life, pop culture examples.
           </strong>
         </h3>
@@ -81,7 +81,7 @@ export class Home extends Component {
           <li>
             See the{" "}
             <strong
-              style={{ color: "#e29578", textShadow: "1px 1px 1px #CCC" }}
+              style={{ color: "#006d77", textShadow: "1px 1px 1px #999" }}
             >
               dictionary definition
             </strong>
@@ -90,7 +90,7 @@ export class Home extends Component {
           <li>
             Get a{" "}
             <strong
-              style={{ color: "#e29578", textShadow: "1px 1px 1px #CCC" }}
+              style={{ color: "#006d77", textShadow: "1px 1px 1px #999" }}
             >
               Spotify
             </strong>{" "}
@@ -99,7 +99,7 @@ export class Home extends Component {
           <li>
             Read the latest{" "}
             <strong
-              style={{ color: "#e29578", textShadow: "1px 1px 1px #CCC" }}
+              style={{ color: "#006d77", textShadow: "1px 1px 1px #999" }}
             >
               Tweets
             </strong>{" "}
@@ -108,7 +108,7 @@ export class Home extends Component {
           <li>
             See suggestions from{" "}
             <strong
-              style={{ color: "#e29578", textShadow: "1px 1px 1px #CCC" }}
+              style={{ color: "#006d77", textShadow: "1px 1px 1px #999" }}
             >
               Urban Dictionary
             </strong>{" "}
