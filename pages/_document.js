@@ -2,29 +2,19 @@
 
 import React from "react";
 
-import NavBar from "../components/NavBar";
-
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
 import { ServerStyleSheets } from "@material-ui/core/styles";
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
-
-const theme = responsiveFontSizes(
-  createMuiTheme({
-    palette: {
-      primary: {
-        main: purple[500],
-      },
-      secondary: {
-        main: green[500],
-      },
-    },
-  })
-);
 
 class MyDocument extends Document {
+  mediaNetAd = () => {
+    try {
+      window._mNHandle.queue.push(function () {
+        window._mNDetails.loadTag("458990043", "728x90", "458990043");
+      });
+    } catch (error) {}
+  };
+
   render() {
     return (
       <Html>
@@ -39,7 +29,7 @@ class MyDocument extends Document {
           </script>
           <script
             src="https://contextual.media.net/dmedianet.js?cid=8CUH26FJK"
-            async="async"
+            async
           ></script>
           <meta
             name="ahrefs-site-verification"
@@ -49,6 +39,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <div id="458990043">{this.mediaNetAd}</div>
         </body>
       </Html>
     );

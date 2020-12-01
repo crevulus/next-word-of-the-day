@@ -125,7 +125,6 @@ export class Home extends Component {
             with contemporary meanings!
           </li>
         </ol>
-        <div id="458990043">{this.mediaNetAd}</div>
       </Layout>
     );
   }
