@@ -32,6 +32,14 @@ export class Home extends Component {
     this.setState({ searchTerm: e.target.value });
   };
 
+  mediaNetAd = () => {
+    try {
+      window._mNHandle.queue.push(function () {
+        window._mNDetails.loadTag("458990043", "728x90", "458990043");
+      });
+    } catch (error) {}
+  };
+
   render() {
     return (
       <Layout>
@@ -117,6 +125,7 @@ export class Home extends Component {
             with contemporary meanings!
           </li>
         </ol>
+        <div id="458990043">{this.mediaNetAd}</div>
       </Layout>
     );
   }
