@@ -1,6 +1,13 @@
-import { TOGGLE_EXPLICIT, TOGGLE_NICHE } from "../actions/choicesActions";
+import {
+  TOGGLE_EXPLICIT,
+  TOGGLE_NICHE,
+  CHOOSE_COUNTRY,
+} from "../actions/choicesActions";
 
-const choicesReducer = (state = { explicit: false, niche: false }, action) => {
+const choicesReducer = (
+  state = { explicit: false, niche: false, country: null },
+  action
+) => {
   switch (action.type) {
     case TOGGLE_EXPLICIT:
       return {
@@ -11,6 +18,11 @@ const choicesReducer = (state = { explicit: false, niche: false }, action) => {
       return {
         ...state,
         niche: action.payload,
+      };
+    case CHOOSE_COUNTRY:
+      return {
+        ...state,
+        country: action.payload,
       };
     default:
       return { ...state };

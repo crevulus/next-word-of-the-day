@@ -23,14 +23,68 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import CountryDropdown from "../../components/CountryDropdown";
+import SpotifyWidget from "../../components/SpotifyWidget";
 
 class Definition extends Component {
-  constructor({ router }, ...props) {
+  constructor({ router, songsData }, ...props) {
     super({ router }, ...props);
     this.state = {
+      songsData: songsData,
       urban: false,
     };
   }
+
+  fetchData = async () => {
+    let fetchedToken = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        authorization: "Basic " + process.env.NEXT_PUBLIC_ACCESS_TOKEN_AUTH,
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "grant_type=client_credentials",
+    })
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    fetchedToken = await fetchedToken.json();
+    const accessToken = fetchedToken.access_token;
+
+    const req = await fetch(
+      `https://api.spotify.com/v1/search?q=${this.props.search.value.replace(
+        /#(.*)/,
+        ""
+      )}&type=track&market=${this.props.choices.country}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: "Bearer " + accessToken,
+        },
+      }
+    );
+    const replacementSongsJSON = await req.json();
+    const replacementSongs = [];
+    replacementSongsJSON.tracks.items.map((obj) => {
+      const songTitle = obj.name.toLowerCase();
+      const searchTerm = this.props.search.value.toLowerCase();
+      const songRegex = new RegExp("\\b" + searchTerm + "\\b", "g");
+      const regexTest = songRegex.test(songTitle);
+      if (regexTest === false) {
+        return;
+      } else {
+        replacementSongs.push(obj);
+        return;
+      }
+    });
+    this.setState({ songsData: replacementSongs });
+  };
+
+  handleDropdownGo = () => {
+    this.fetchData();
+  };
 
   render() {
     if (this.props.router.isFallback) {
@@ -141,20 +195,11 @@ class Definition extends Component {
                 Pop Culture
               </Typography>
               <div id="cultureContainer" className={styles.cultureContainer}>
-                <CountryDropdown />
+                {/* <CountryDropdown handleChildGo={this.handleDropdownGo} /> */}
                 <Typography variant="h5" gutterBottom>
                   Spotify
                 </Typography>
-                <div className={styles.spotify}>
-                  <iframe
-                    src={`https://open.spotify.com/embed/track/${this.props.songsData[0].id}`}
-                    width="300"
-                    height="380"
-                    frameBorder="0"
-                    allowtransparency="true"
-                    allow="encrypted-media"
-                  ></iframe>
-                </div>
+                <SpotifyWidget id={this.props.songsData[0].id} />
                 <Typography variant="h5" gutterBottom>
                   Twitter
                 </Typography>
@@ -178,8 +223,8 @@ class Definition extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  accessToken: state.accessToken,
   search: state.search,
+  choices: state.choices,
 });
 
 const mapActionsToProps = { toggleSearching };
@@ -230,18 +275,30 @@ export async function getStaticProps(context) {
   fetchedToken = await fetchedToken.json();
   const accessToken = fetchedToken.access_token;
 
-  const songsRes = await fetch(
-    `https://api.spotify.com/v1/search?q=${context.params.word.replace(
-      /#(.*)/,
-      ""
-    )}&type=track`,
-    {
-      method: "GET",
-      headers: {
-        authorization: "Bearer " + accessToken,
-      },
+  const spotifySearchUrl = () => {
+    if (reduxStore.choices.country) {
+      return new URL(
+        `https://api.spotify.com/v1/search?q=${context.params.word.replace(
+          /#(.*)/,
+          ""
+        )}&type=track&market=${reduxStore.choices.country}`
+      );
+    } else {
+      return new URL(
+        `https://api.spotify.com/v1/search?q=${context.params.word.replace(
+          /#(.*)/,
+          ""
+        )}&type=track`
+      );
     }
-  )
+  };
+
+  const songsRes = await fetch(spotifySearchUrl(), {
+    method: "GET",
+    headers: {
+      authorization: "Bearer " + accessToken,
+    },
+  })
     .then((response) => {
       return response;
     })
@@ -255,21 +312,21 @@ export async function getStaticProps(context) {
     const searchTerm = context.params.word.toLowerCase();
     const songRegex = new RegExp("\\b" + searchTerm + "\\b", "g");
     const regexTest = songRegex.test(songTitle);
-    if (reduxStore.choices.explicit === false) {
-      if (obj.explicit === true || regexTest === false) {
-        return;
-      } else {
-        filteredSongsArray.push(obj);
-        return;
-      }
-    } else if (reduxStore.choices.explicit === true) {
-      if (regexTest === false) {
-        return;
-      } else {
-        filteredSongsArray.push(obj);
-        return;
-      }
+    // if (reduxStore.choices.explicit === false) {
+    //   if (obj.explicit === true || regexTest === false) {
+    //     return;
+    //   } else {
+    //     filteredSongsArray.push(obj);
+    //     return;
+    //   }
+    // } else if (reduxStore.choices.explicit === true) {
+    if (regexTest === false) {
+      return;
+    } else {
+      filteredSongsArray.push(obj);
+      return;
     }
+    // }
   });
 
   // console.log(context);
@@ -388,7 +445,7 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { word: "help" } }],
+    paths: [{ params: { word: reduxStore.search.value } }],
     fallback: true,
   };
 }
