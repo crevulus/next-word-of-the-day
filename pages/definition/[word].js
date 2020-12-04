@@ -22,6 +22,7 @@ import { Button } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import CountryDropdown from "../../components/CountryDropdown";
 
 class Definition extends Component {
   constructor({ router }, ...props) {
@@ -140,6 +141,7 @@ class Definition extends Component {
                 Pop Culture
               </Typography>
               <div id="cultureContainer" className={styles.cultureContainer}>
+                <CountryDropdown />
                 <Typography variant="h5" gutterBottom>
                   Spotify
                 </Typography>
@@ -253,21 +255,21 @@ export async function getStaticProps(context) {
     const searchTerm = context.params.word.toLowerCase();
     const songRegex = new RegExp("\\b" + searchTerm + "\\b", "g");
     const regexTest = songRegex.test(songTitle);
-    // if (reduxStore.choices.explicit === false) {
-    //   if (obj.explicit === true || regexTest === false) {
-    //     return;
-    //   } else {
-    //     filteredSongsArray.push(obj);
-    //     return;
-    //   }
-    // } else if (reduxStore.choices.explicit === true) {
-    if (regexTest === false) {
-      return;
-    } else {
-      filteredSongsArray.push(obj);
-      return;
+    if (reduxStore.choices.explicit === false) {
+      if (obj.explicit === true || regexTest === false) {
+        return;
+      } else {
+        filteredSongsArray.push(obj);
+        return;
+      }
+    } else if (reduxStore.choices.explicit === true) {
+      if (regexTest === false) {
+        return;
+      } else {
+        filteredSongsArray.push(obj);
+        return;
+      }
     }
-    // }
   });
 
   // console.log(context);

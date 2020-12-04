@@ -10,7 +10,6 @@ export default function Footer() {
           Chris Evans
         </a>{" "}
         (no, not that one).
-        <a href="https://www.daisycon.com/en/">daisycon</a>
       </div>
     </div>
   );
