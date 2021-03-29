@@ -14,10 +14,10 @@ In my time as a teacher, and as a language learner, I've noticed a gap between t
 ### Made Using
 ![](https://img.shields.io/badge/-JavaScript-informational?style=flat&logo=JavaScript&logoColor=white&color=F7DF1E) ![](https://img.shields.io/badge/-React-informational?style=flat&logo=React&logoColor=white&color=61DAFB) ![](https://img.shields.io/badge/-Next-informational?style=flat&logo=Next.js&logoColor=white&color=000000) ![](https://img.shields.io/badge/-MaterialUI-informational?style=flat&logo=Material-UI&logoColor=white&color=0081CB)
 
-
+<img src="./screenshots/mobileView1.png" height="400px"> <img src="./screenshots/mobileView2.png" height="400px">
 
 ## ToDo List
 - [] Limit to songs locally available to user
-- [] Limit to exact matches
+- [] Limit songs to exact matches
 - [] Enable user to create playlist
 - [] Switch mode for explicit/niche
